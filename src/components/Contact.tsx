@@ -19,11 +19,36 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
-    alert('Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.');
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('✅ Terima kasih! Pesan Anda telah terkirim.');
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          phone: '',
+          service: '',
+          message: '',
+          consultationDate: ''
+        });
+      } else {
+        alert('❌ Gagal mengirim pesan. Silakan coba lagi.');
+      }
+    } catch (error) {
+      console.error('❌ Error saat mengirim:', error);
+      alert('❌ Terjadi kesalahan saat mengirim. Silakan coba lagi.');
+    }
   };
 
   return (
@@ -49,8 +74,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-1">Email</h4>
-                    <p className="text-gray-600">info@dataproconsulting.com</p>
-                    <p className="text-gray-600">michael.chen@dataproconsulting.com</p>
+                    <p className="text-gray-600">ihrama13@gmail.com</p>
                   </div>
                 </div>
 
@@ -60,7 +84,6 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-1">Telepon</h4>
-                    <p className="text-gray-600">+62 21 1234 5678</p>
                     <p className="text-gray-600">+62 812 3456 7890</p>
                   </div>
                 </div>
