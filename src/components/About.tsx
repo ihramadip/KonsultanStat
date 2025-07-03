@@ -43,8 +43,8 @@ const About = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Pendidikan</h4>
-                    <p className="text-sm text-gray-600">PhD Statistics, Stanford University</p>
-                    <p className="text-sm text-gray-600">MS Data Science, MIT</p>
+                    <p className="text-sm text-gray-600">Universitas Islam Bandung</p>
+                    <p className="text-sm text-gray-600">Bachelor Staistics, S.Stat</p>
                   </div>
                 </div>
 
@@ -54,8 +54,8 @@ const About = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Sertifikasi</h4>
-                    <p className="text-sm text-gray-600">Certified Analytics Professional</p>
-                    <p className="text-sm text-gray-600">SAS Certified Data Scientist</p>
+                    <p className="text-sm text-gray-600">Certified BNSP Data Analyst</p>
+                    <p className="text-sm text-gray-600">Certified Data Scientist</p>
                   </div>
                 </div>
 
