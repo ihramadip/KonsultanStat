@@ -32,7 +32,7 @@ const About = () => {
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Tentang Konsultan</h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                 Dengan pengalaman lebih dari 15 tahun di bidang statistik dan analisis data, 
-                Dr. Michael Chen telah membantu ratusan perusahaan mengoptimalkan keputusan bisnis 
+                Ihram Adi Pratama telah membantu banyak perusahaan mengoptimalkan keputusan bisnis 
                 melalui pendekatan data-driven yang solid dan metodologi statistik yang tepat.
               </p>
 
@@ -44,7 +44,7 @@ const About = () => {
                   <div>
                     <h4 className="font-bold text-gray-900 mb-2">Pendidikan</h4>
                     <p className="text-sm text-gray-600">Universitas Islam Bandung</p>
-                    <p className="text-sm text-gray-600">Bachelor Staistics, S.Stat</p>
+                    <p className="text-sm text-gray-600">Bachelor Statistics, S.Stat</p>
                   </div>
                 </div>
 
