@@ -96,10 +96,5 @@ app.get('/api/schedules', async (req, res) => {
 
 // Mulai server
 app.listen(PORT, () => {
-<<<<<<< HEAD
   console.log('Server berjalan di http://localhost:${PORT}');
 });
-=======
-  console.log(`Server berjalan di http://localhost:${PORT}`);
-});
->>>>>>> 9db5021939a81bcad0d666d2aedbaadd4cf94099
