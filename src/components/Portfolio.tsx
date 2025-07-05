@@ -88,7 +88,15 @@ const Portfolio = () => {
           <div className="bg-blue-800 rounded-2xl p-12 text-white">
             <h3 className="text-3xl font-bold mb-4">Siap Memulai Proyek Anda?</h3>
             <p className="text-xl text-blue-100 mb-8">Diskusikan kebutuhan analisis data Anda dengan tim ahli kami</p>
-            <button className="bg-yellow-500 text-blue-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="bg-yellow-500 text-blue-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
               Mulai Konsultasi
             </button>
           </div>

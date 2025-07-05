@@ -13,6 +13,7 @@ const Contact = () => {
   });
 
   const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // State untuk form jadwal konsultasi modal
   const [scheduleData, setScheduleData] = useState({
@@ -29,8 +30,15 @@ const Contact = () => {
     }
   }, [showScheduleModal]);
 
-  const openScheduleModal = () => setShowScheduleModal(true);
-  const closeScheduleModal = () => setShowScheduleModal(false);
+  const openScheduleModal = () => {
+    setIsModalVisible(true);
+    setShowScheduleModal(true);
+  };
+
+  const closeScheduleModal = () => {
+    setShowScheduleModal(false);
+    setTimeout(() => setIsModalVisible(false), 300); // delay 300ms sesuai durasi animasi
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -78,38 +86,37 @@ const Contact = () => {
   };
 
   // Submit jadwal konsultasi ke backend
-  // Bagian handleScheduleSubmit
-const handleScheduleSubmit = async (e) => {
-  e.preventDefault();
+  const handleScheduleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!scheduleData.name || !scheduleData.date || !scheduleData.time) {
-    alert('❌ Mohon isi semua field jadwal konsultasi.');
-    return;
-  }
-
-  try {
-    console.log('Mengirim jadwal:', scheduleData); // Debug data dikirim
-    const response = await fetch('http://localhost:5000/api/schedule', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(scheduleData)
-    });
-
-    const result = await response.json(); // parsing response json
-
-    if (response.ok) {
-      alert('✅ Jadwal konsultasi berhasil dikirim!');
-      setScheduleData({ name: '', date: '', time: '' });
-      closeScheduleModal();
-    } else {
-      console.error('Response error:', result);
-      alert('❌ Gagal mengirim jadwal: ' + (result.error || 'Silakan coba lagi.'));
+    if (!scheduleData.name || !scheduleData.date || !scheduleData.time) {
+      alert('❌ Mohon isi semua field jadwal konsultasi.');
+      return;
     }
-  } catch (error) {
-    console.error('❌ Error saat mengirim jadwal:', error);
-    alert('❌ Terjadi kesalahan saat mengirim jadwal. Silakan coba lagi.');
-  }
-};
+
+    try {
+      console.log('Mengirim jadwal:', scheduleData);
+      const response = await fetch('http://localhost:5000/api/schedule', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(scheduleData)
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('✅ Jadwal konsultasi berhasil dikirim!');
+        setScheduleData({ name: '', date: '', time: '' });
+        closeScheduleModal();
+      } else {
+        console.error('Response error:', result);
+        alert('❌ Gagal mengirim jadwal: ' + (result.error || 'Silakan coba lagi.'));
+      }
+    } catch (error) {
+      console.error('❌ Error saat mengirim jadwal:', error);
+      alert('❌ Terjadi kesalahan saat mengirim jadwal. Silakan coba lagi.');
+    }
+  };
 
   return (
     <section id="contact" className="py-20 bg-gray-50">
@@ -307,71 +314,76 @@ const handleScheduleSubmit = async (e) => {
         </div>
       </div>
 
-      {/* Jadwal Modal */}
-      {showScheduleModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full relative">
+      {/* Jadwal Modal dengan Transisi */}
+      {isModalVisible && (
+        <div
+          className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center transition-opacity duration-300 ${
+            showScheduleModal ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        >
+          <div
+            className={`bg-white rounded-lg shadow-lg p-8 max-w-md w-full relative transform transition-transform duration-300 ${
+              showScheduleModal ? 'scale-100' : 'scale-95'
+            }`}
+          >
             <button
               onClick={closeScheduleModal}
-              className="absolute top-2 right-3 text-gray-400 hover:text-gray-600 text-2xl font-bold"
+              className="absolute top-2 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
+              aria-label="Tutup modal"
             >
               &times;
             </button>
-            <h3 className="text-xl font-bold mb-4 text-gray-900">Jadwalkan Konsultasi</h3>
+            <h3 className="text-2xl font-bold mb-6 text-gray-900">Jadwalkan Konsultasi</h3>
+
             <form onSubmit={handleScheduleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="scheduleName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nama Lengkap
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Nama Lengkap *
                 </label>
                 <input
                   type="text"
-                  id="scheduleName"
+                  id="name"
                   name="name"
                   value={scheduleData.name}
                   onChange={handleScheduleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
+
               <div>
-                <label htmlFor="scheduleDate" className="block text-sm font-medium text-gray-700 mb-1">
-                  Tanggal Konsultasi
+                <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
+                  Tanggal Konsultasi *
                 </label>
                 <input
                   type="date"
-                  id="scheduleDate"
+                  id="date"
                   name="date"
                   value={scheduleData.date}
                   onChange={handleScheduleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
+
               <div>
-                <label htmlFor="scheduleTime" className="block text-sm font-medium text-gray-700 mb-1">
-                  Jam
+                <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">
+                  Waktu Konsultasi *
                 </label>
-                <select
-                  id="scheduleTime"
+                <input
+                  type="time"
+                  id="time"
                   name="time"
                   value={scheduleData.time}
                   onChange={handleScheduleChange}
                   required
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="">Pilih Jam</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:00">11:00</option>
-                  <option value="13:00">13:00</option>
-                  <option value="14:00">14:00</option>
-                  <option value="15:00">15:00</option>
-                </select>
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-900 transition duration-300"
+                className="w-full bg-yellow-500 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300"
               >
                 Kirim Jadwal
               </button>

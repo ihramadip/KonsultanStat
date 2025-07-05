@@ -2,6 +2,13 @@ import React from 'react';
 import { TrendingUp, Target, Users } from 'lucide-react';
 
 const Hero = () => {
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white relative overflow-hidden">
       {/* Background Pattern */}
@@ -17,16 +24,22 @@ const Hero = () => {
             Solusi Statistik & Data untuk 
             <span className="text-yellow-400 block mt-2">Keputusan Bisnis yang Lebih Cerdas</span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl mb-8 text-blue-100 leading-relaxed">
             Kami membantu bisnis memahami data melalui analisis statistik, visualisasi, dan konsultasi berbasis insight.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button className="bg-yellow-500 text-blue-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="bg-yellow-500 text-blue-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
               Jadwalkan Konsultasi Gratis
             </button>
-            <button className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition duration-300">
+            <button
+              onClick={() => scrollToSection('services')}
+              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition duration-300"
+            >
               Lihat Layanan Kami
             </button>
           </div>
